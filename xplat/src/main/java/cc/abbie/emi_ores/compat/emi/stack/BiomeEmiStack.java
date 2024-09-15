@@ -28,11 +28,17 @@ public class BiomeEmiStack extends EmiStack {
         this.biome = biome;
 
         var atlas = Minecraft.getInstance().getModelManager().getAtlas(ResourceLocation.withDefaultNamespace("textures/atlas/blocks.png"));
+        ResourceLocation id = getId();
 
-        TextureAtlasSprite sprite = atlas.getSprite(getId().withPrefix("emi_ores/biome_icon/"));
-
-        if (MissingTextureAtlasSprite.getLocation().equals(sprite.contents().name())) {
+        TextureAtlasSprite sprite;
+        if (id == null) {
             sprite = atlas.getSprite(ResourceLocation.withDefaultNamespace("emi_ores/biome_icon/missing"));
+        } else {
+            sprite = atlas.getSprite(getId().withPrefix("emi_ores/biome_icon/"));
+
+            if (MissingTextureAtlasSprite.getLocation().equals(sprite.contents().name())) {
+                sprite = atlas.getSprite(ResourceLocation.withDefaultNamespace("emi_ores/biome_icon/missing"));
+            }
         }
 
         this.sprite = sprite;
